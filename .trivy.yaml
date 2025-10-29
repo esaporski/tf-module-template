@@ -1,0 +1,18 @@
+format: table
+misconfiguration:
+  scanners:
+    - terraform
+    - terraformplan-json
+    - terraformplan-snapshot
+  terraform:
+    exclude-downloaded-modules: false
+    vars: []
+output: ""
+quiet: false
+report: all
+scan:
+  disable-telemetry: true
+  file-patterns: []
+  skip-dirs: []
+  skip-files: []
+  skip-version-check: false

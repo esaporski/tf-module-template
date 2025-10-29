@@ -1,0 +1,39 @@
+formatter: markdown table
+
+sections:
+  hide:
+    - footer
+
+header-from: main.tf
+
+content: |-
+  {{ .Header }}
+
+  ## Examples
+
+  ```hcl
+  {{ include "examples/foo/main.tf" }}
+  ```
+
+  {{ .Requirements }}
+
+  {{ .Providers }}
+
+  {{ .Modules }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  {{ .Footer }}
+
+output:
+  file: README.md
+  mode: replace
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+    {{- printf "\n" -}}

@@ -1,0 +1,74 @@
+# pre-commit install --install-hooks
+repos:
+  - repo: local
+    hooks:
+      - id: terraform-docs
+        name: terraform-docs
+        language: system
+        entry: terraform-docs
+        pass_filenames: false
+        args:
+          - "--config=.terraform-docs.yml"
+          - "--recursive=true"
+          - "--recursive-include-main=true"
+          - "--recursive-path=modules"
+          - "."
+      - id: terraform-docs-examples
+        name: terraform-docs-examples
+        language: system
+        entry: terraform-docs
+        pass_filenames: false
+        args:
+          - "--config=.terraform-docs.yml"
+          - "--recursive=true"
+          - "--recursive-include-main=false"
+          - "--recursive-path=examples"
+          - "."
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.103.0
+    hooks:
+      - id: terraform_fmt
+        args:
+          - "--hook-config=--tf-path=terraform"
+          - "--args=-recursive"
+      - id: terraform_providers_lock
+        args:
+          - "--hook-config=--tf-path=terraform"
+      - id: terraform_tflint
+        args:
+          - "--args=--recursive"
+          - '--args=--config "${PWD}/.tflint.hcl"'
+      - id: terraform_trivy
+        args:
+          - '--args=--config "${PWD}/.trivy.yaml"'
+      - id: terraform_validate
+        args:
+          - "--hook-config=--tf-path=terraform"
+      - id: tfupdate
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: "3.2.487"
+    hooks:
+      - id: checkov
+        args:
+          - "--config-file=.checkov-config.yaml"
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.9.1
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages:
+          - pre-push
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-json
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: detect-aws-credentials
+        args:
+          - "--allow-missing-credentials"
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args:
+          - "--fix=lf"
+      - id: trailing-whitespace
