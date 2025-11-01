@@ -12,10 +12,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 {% if not loop.first %}
 
 {% endif %}
-{% if loop.nextitem is not defined %}
+{% if loop.nextitem is not defined and entry.version != "Unreleased" %}
 {% set url_ = "releases/" + entry.version %}
 {% elif entry.version == "Unreleased" %}
+{% if loop.nextitem is not defined %}
+{% set url_ = "" %}
+{% else %}
 {% set url_ = "compare/" + loop.nextitem.version + "...HEAD" %}
+{% endif %}
 {% else %}
 {% set url_ = "compare/" + loop.nextitem.version + "..." + entry.version %}
 {% endif %}
