@@ -21,9 +21,9 @@ docs: ## Generate documentation (requires terraform-docs)
 	@echo "+ $@"
 	@echo -e "\n+ Running terraform-docs..."
 	@terraform-docs \
-		--config="./.terraform-docs.yml" --recursive=true --recursive-include-main=true --recursive-path=modules . \
+		--config="./.terraform-docs.yml" --recursive="true" --recursive-include-main="true" --recursive-path="modules" "." \
 	&& terraform-docs \
-		--config="./.terraform-docs.yml" --recursive=true --recursive-include-main=false --recursive-path=examples .
+		--config="./.terraform-docs.yml" --recursive="true" --recursive-include-main="false" --recursive-path="examples" "."
 
 .SILENT: init
 init: ## Init all modules in this repository (main module, modules, examples and tests)
@@ -45,12 +45,12 @@ clean: ## Remove '.terraform' directories and lock files recursively
 checkov: ## Run checkov using the '.checkov-config.yaml' configuration file
 	@echo "+ $@"
 	@echo -e "\n+ Running checkov..."
-	@checkov --config-file="$(CURDIR)/.checkov-config.yaml" --directory $(CURDIR)
+	@checkov --config-file "$(CURDIR)/.checkov-config.yaml" --directory "$(CURDIR)"
 
 fmt: ## Format Terraform files recursively
 	@echo "+ $@"
 	@echo -e "\n+ Running terraform fmt recursively..."
-	@terraform fmt -recursive $(CURDIR)
+	@terraform fmt -recursive "$(CURDIR)"
 
 test: ## Run terraform test
 	@echo "+ $@"
@@ -65,7 +65,7 @@ tflint: ## Run tflint using the '.tflint.hcl' configuration file
 tfupdate: ## Run tfupdate
 	@echo "+ $@"
 	@echo -e "\n+ Running tfupdate recursively..."
-	@tfupdate terraform --recursive $(CURDIR)
+	@tfupdate terraform --recursive "$(CURDIR)"
 
 trivy: ## Run trivy using the '.trivy.yaml' configuration file
 	@echo "+ $@"
