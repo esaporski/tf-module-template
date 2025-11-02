@@ -90,7 +90,7 @@ bump: ## Bump semantic version based on the git log and generate changelog
 	@(current_version="$$(cz version --project)" \
 		&& next_version="$$(cz bump --get-next --yes)" \
 		&& if [ "$$current_version" != "0.0.1" ]; then changelog_start_rev="--start-rev $${current_version}"; fi \
-		&& short_changelog="$$(eval cz changelog --dry-run --extra create_short_changelog=true --unreleased-version "$$next_version" "$$changelog_start_rev")" \
+		&& short_changelog="$$(eval cz changelog --dry-run --extra 'create_short_changelog=true' --unreleased-version "$$next_version" "$$changelog_start_rev")" \
 		&& cz changelog --unreleased-version "$$next_version" \
 		&& cz bump --annotated-tag-message "$$short_changelog" --yes \
 		&& git push \
