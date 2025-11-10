@@ -1,4 +1,10 @@
-# Override content section from main module
+# Override configuration from main module
+header-from: main.tf
+
+sections:
+  hide:
+    - footer
+
 content: |-
   {{ .Header }}
 

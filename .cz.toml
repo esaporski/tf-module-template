@@ -25,4 +25,4 @@ changelog_file = "CHANGELOG.md"
 extras.repository_url = "https://github.com/esaporski/tf-module-template"
 
 # Provide custom changelog jinja template path relative to the current working directory
-template = ".CHANGELOG.md.j2"
+template = "docs/.CHANGELOG.md.j2"

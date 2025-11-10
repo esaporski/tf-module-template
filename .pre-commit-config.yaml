@@ -45,6 +45,9 @@ repos:
         args:
           - "--hook-config=--tf-path=terraform"
       - id: tfupdate
+        args:
+          - "--args=terraform"
+          - "--args=--recursive"
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: "3.2.487"
     hooks:
