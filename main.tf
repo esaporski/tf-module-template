@@ -1,6 +1,0 @@
-/*
- * # Terraform Module Template
- *
- * Brief description about module.
- *
- */

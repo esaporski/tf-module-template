@@ -17,6 +17,7 @@ endif
 .PHONY: help
 
 ## Build:
+.PHONY: docs
 docs: ## Generate documentation (requires terraform-docs)
 	@echo "+ $@"
 	@echo -e "\n+ Running terraform-docs..."
