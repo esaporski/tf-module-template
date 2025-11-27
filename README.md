@@ -10,6 +10,10 @@ Brief description about module.
 
 ## Examples
 
+<!--
+  INFORMATION: Add new examples in the `.terraform-docs.yml` file.
+-->
+
 ```hcl
 /*
  * # Foo

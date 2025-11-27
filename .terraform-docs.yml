@@ -8,6 +8,10 @@ content: |-
 
   ## Examples
 
+  <!--
+    INFORMATION: Add new examples in the `.terraform-docs.yml` file.
+  -->
+
   ```hcl
   {{ include "examples/foo/main.tf" }}
   ```
