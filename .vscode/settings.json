@@ -1,0 +1,35 @@
+{
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.json": "json"
+  },
+  "[json]": {
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
+  },
+  "[markdown]": {
+    "editor.formatOnPaste": true
+  },
+  "redhat.telemetry.enabled": false,
+  "terraform.experimentalFeatures.prefillRequiredFields": true,
+  "terraform.experimentalFeatures.validateOnSave": true,
+  "terraform.validation.enableEnhancedValidation": true,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.codeActionsOnSave": {
+      "source.formatAll.terraform": "explicit"
+    }
+  },
+  "[terraform-vars]": {
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.codeActionsOnSave": {
+      "source.formatAll.terraform": "explicit"
+    }
+  },
+  "yaml.schemas": {
+    "https://www.schemastore.org/pre-commit-config.json": [
+      "/.pre-commit-config.yml",
+      "/.pre-commit-config.yaml"
+    ]
+  }
+}
