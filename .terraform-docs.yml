@@ -6,6 +6,8 @@ footer-from: docs/.terraform-docs.footer.md
 content: |-
   {{ .Header }}
 
+  <!-- markdownlint-disable no-inline-html -->
+
   ## Examples
 
   <!--
