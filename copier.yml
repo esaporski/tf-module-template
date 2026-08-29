@@ -1,0 +1,103 @@
+_envops:
+  undefined: jinja2.StrictUndefined
+
+_subdirectory: "template"
+
+project_slug:
+  type: str
+  help: Project slug
+  placeholder: my-custom-module
+  validator: >-
+    {% if not (project_slug | regex_search('^[a-z][a-z0-9-]+$')) %}
+    Use lowercase letters, digits, and dashes; start with a letter.
+    {% endif %}
+
+project_name:
+  type: str
+  help: Project name
+  placeholder: My Custom Terraform/OpenTofu module
+  default: "{{ project_slug }}"
+  validator: >-
+    {% if (project_name == None or project_name == '') %}
+    Project name cannot be empty.
+    {% endif %}
+
+project_short_description:
+  type: str
+  help: Short description of your project
+  default: A Terraform/OpenTofu module for managing various resources.
+  validator: >-
+    {% if (project_short_description == None or project_short_description == '') %}
+    Project short description cannot be empty.
+    {% endif %}
+
+vcs_provider:
+  type: str
+  help: Which VCS provider do you use?
+  choices:
+    GitHub:
+      value: github
+    GitLab:
+      value: gitlab
+    Codeberg:
+      value: codeberg
+  default: github
+
+vcs_repository_name:
+  type: str
+  help: What is your repository name?
+  default: "{{ project_slug }}"
+
+vcs_username:
+  type: str
+  help: What is your VCS username?
+  placeholder: "jdoe"
+  validator: >-
+    {% if (vcs_username == None or vcs_username == '') %}
+    VCS username cannot be empty.
+    {% endif %}
+
+vcs_hostname:
+  type: str
+  help: What is your VCS hostname?
+  default: "{{ vcs_provider }}.{% if vcs_provider == 'codeberg' %}org{% else %}com{% endif %}"
+
+vcs_repository_url:
+  type: str
+  help: What is your repository URL?
+  default: "https://{{ vcs_hostname }}/{{ vcs_username }}/{{ vcs_repository_name }}"
+  when: false # This makes sure it isn't asked nor stored
+
+vcs_clone_ssh_url:
+  type: str
+  default: "git@{{ vcs_hostname }}:{{ vcs_username }}/{{ vcs_repository_name }}.git"
+  when: false # This makes sure it isn't asked nor stored
+
+vcs_clone_https_url:
+  type: str
+  default: "{{ vcs_repository_url }}.git"
+  when: false # This makes sure it isn't asked nor stored
+
+iac:
+  type: str
+  help: Which IaC tool do you use?
+  choices:
+    Terraform:
+      value: terraform
+    OpenTofu:
+      value: tofu
+
+create_examples_dir:
+  type: bool
+  help: Do you want to create a examples directory with a placeholder example?
+  default: true
+
+create_modules_dir:
+  type: bool
+  help: Do you want to create a modules directory with a placeholder submodule?
+  default: true
+
+create_tests_dir:
+  type: bool
+  help: Do you want to create a tests directory with a placeholder test?
+  default: true
