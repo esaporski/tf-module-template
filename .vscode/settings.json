@@ -1,7 +1,10 @@
 {
   "editor.formatOnSave": true,
   "files.associations": {
-    "*.json": "json"
+    "*.json": "json",
+    "*.tf": "terraform",
+    "*.tfvars": "terraform-vars",
+    "*.tfstate": "json"
   },
   "[json]": {
     "files.insertFinalNewline": true,
