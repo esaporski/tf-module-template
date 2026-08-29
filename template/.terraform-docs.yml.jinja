@@ -4,10 +4,11 @@ header-from: docs/.terraform-docs.header.md
 footer-from: docs/.terraform-docs.footer.md
 
 content: |-
-  {{ .Header }}
+{% raw %}  {{ .Header }}{% endraw %}
 
   <!-- markdownlint-disable no-inline-html -->
 
+{%- if create_examples_dir %}
   ## Examples
 
   <!--
@@ -15,10 +16,10 @@ content: |-
   -->
 
   ```hcl
-  {{ include "examples/foo/main.tf" }}
+{% raw %}  {{ include "examples/foo/main.tf" }}{% endraw %}
   ```
-
-  {{ .Requirements }}
+{% endif %}
+{% raw %}  {{ .Requirements }}
 
   {{ .Providers }}
 
@@ -45,3 +46,4 @@ output:
     {{ .Content }}
     <!-- END_TF_DOCS -->
     {{- printf "\n" -}}
+{%- endraw %}

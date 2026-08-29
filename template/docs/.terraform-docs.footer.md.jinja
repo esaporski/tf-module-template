@@ -3,27 +3,41 @@
 
 ### Prerequisites
 
-- [checkov](https://www.checkov.io/1.Welcome/Quick%20Start.html) (use [uv](https://docs.astral.sh/uv/getting-started/installation/) instead of `pip`)
-- [commitizen](https://commitizen-tools.github.io/commitizen/#installation) (use [uv](https://docs.astral.sh/uv/getting-started/installation/) instead of `pip`)
-- [pre-commit](https://pre-commit.com/#install) (use [uv](https://docs.astral.sh/uv/getting-started/installation/) instead of `pip`)
+> [!TIP]
+> You should [install uv](https://docs.astral.sh/uv/getting-started/installation/) to be able to install all the dependencies below.
+> Also, I **highly** recommend using [tenv](https://github.com/tofuutils/tenv?tab=readme-ov-file#installation) to manage your Terraform/OpenTofu versions.
+
+- [checkov](https://www.checkov.io/1.Welcome/Quick%20Start.html)
+- [commitizen](https://commitizen-tools.github.io/commitizen/#installation)
+- [pre-commit](https://pre-commit.com/#install)
 - [terraform-docs](https://terraform-docs.io/user-guide/installation/)
 - [tflint](https://github.com/terraform-linters/tflint?tab=readme-ov-file#installation)
 - [tfupdate](https://github.com/minamijoyo/tfupdate?tab=readme-ov-file#install)
 - [trivy](https://trivy.dev/docs/latest/getting-started/installation/)
-- [terraform](https://developer.hashicorp.com/terraform/install) (I **highly** recommend using [tenv](https://github.com/tofuutils/tenv?tab=readme-ov-file#installation) to manage your Terraform versions)
+{%- if iac == "terraform" %}
+- [terraform](https://developer.hashicorp.com/terraform/install)
+{%- elif iac == "tofu" %}
+- [tofu](https://opentofu.org/docs/intro/install/)
+{%- endif %}
 
 ### Directory structure
 
 ```shell
-tf-module-template    # Main module root directory
-├── docs              # Documentation related files
+.                     # Main module root directory
+{%- if create_examples_dir %}
 ├── examples          # Example submodules directory
 │   └── foo           # └── Foo example submodule
+{%- endif %}
+{%- if create_modules_dir %}
 ├── modules           # Submodules directory
 │   └── bar           # └── Bar submodule
-└── tests             # Tests directory
-    ├── *.tftest.hcl  # └── Test files
-    └── setup         # └── Submodule for test setup (example)
+{%- endif %}
+{%- if create_tests_dir %}
+├── tests             # Tests directory
+│   ├── *.tftest.hcl  # └── Test files
+│   └── setup         # └── Submodule for test setup (example)
+{%- endif %}
+└── docs              # Documentation related files
 ```
 
 ### Make
@@ -45,8 +59,8 @@ $ make help
 #     clean               Remove '.terraform' directories and lock files recursively
 #   Test:
 #     checkov             Run checkov using the '.checkov-config.yaml' configuration file
-#     fmt                 Format Terraform files recursively
-#     test                Run terraform test
+#     fmt                 Format {{ iac }} files recursively
+#     test                Run {{ iac }} test
 #     tflint              Run tflint using the '.tflint.hcl' configuration file
 #     tfupdate            Run tfupdate
 #     trivy               Run trivy using the '.trivy.yaml' configuration file

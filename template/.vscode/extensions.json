@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "aquasecurityofficial.trivy-vulnerability-scanner",
+    "davidanson.vscode-markdownlint",
+    "editorconfig.editorconfig",
+    "hashicorp.hcl",
+    "hashicorp.terraform",
+    "mkhl.shfmt",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "timonwong.shellcheck"
+  ]
+}

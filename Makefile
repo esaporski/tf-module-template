@@ -7,81 +7,8 @@ WHITE  := $(shell tput -Txterm setaf 7)
 CYAN   := $(shell tput -Txterm setaf 6)
 RESET  := $(shell tput -Txterm sgr0)
 
-# macOS does not use GNU xargs
-XARGS_FLAGS := xargs -i
-ifeq ($(shell uname -s),Darwin)
-	XARGS_FLAGS := xargs -I {}
-endif
-
 .DEFAULT_GOAL := help
 .PHONY: help
-
-## Build:
-.PHONY: docs
-docs: ## Generate documentation (requires terraform-docs)
-	@echo "+ $@"
-	@echo -e "\n+ Running terraform-docs..."
-	@terraform-docs \
-		--config="./.terraform-docs.yml" --recursive="true" --recursive-include-main="true" --recursive-path="modules" "." \
-	&& terraform-docs \
-		--config="./.terraform-docs.yml" --recursive="true" --recursive-include-main="false" --recursive-path="examples" "."
-
-.SILENT: init
-init: ## Init all modules in this repository (main module, modules, examples and tests)
-	@echo "+ $@"
-	@echo -e "\n+ Running terraform init recursively..."
-	@directories="$$(find $(CURDIR)/{examples,modules,tests}/* \
-		-maxdepth 0 \
-		-type d; \
-		echo $(CURDIR))" \
-	&& echo "$$directories" | $(XARGS_FLAGS) sh -c "echo Running command from \'{}\'; terraform -chdir={} init"
-
-## Clean:
-clean: ## Remove '.terraform' directories and lock files recursively
-	@echo "+ $@"
-	@find $(CURDIR) -name .terraform -type d | $(XARGS_FLAGS) rm -rf {}
-	@find $(CURDIR) -name .terraform.lock.hcl -type f -exec rm -rf {} \;
-
-## Test:
-checkov: ## Run checkov using the '.checkov-config.yaml' configuration file
-	@echo "+ $@"
-	@echo -e "\n+ Running checkov..."
-	@checkov --config-file "$(CURDIR)/.checkov-config.yaml" --directory "$(CURDIR)"
-
-fmt: ## Format Terraform files recursively
-	@echo "+ $@"
-	@echo -e "\n+ Running terraform fmt recursively..."
-	@terraform fmt -recursive "$(CURDIR)"
-
-test: ## Run terraform test
-	@echo "+ $@"
-	@echo -e "\n+ Running terraform test..."
-	@terraform test
-
-tflint: ## Run tflint using the '.tflint.hcl' configuration file
-	@echo "+ $@"
-	@echo -e "\n+ Running tflint recursively..."
-	@tflint --recursive --config "$(CURDIR)/.tflint.hcl"
-
-tfupdate: ## Run tfupdate
-	@echo "+ $@"
-	@echo -e "\n+ Running tfupdate recursively..."
-	@tfupdate terraform --recursive "$(CURDIR)"
-
-trivy: ## Run trivy using the '.trivy.yaml' configuration file
-	@echo "+ $@"
-	@echo -e "\n+ Running trivy config..."
-	@trivy --config "$(CURDIR)/.trivy.yaml" config $(CURDIR)
-
-.SILENT: validate
-validate: ## Validate all modules in this repository (main module, modules, examples and tests)
-	@echo "+ $@"
-	@echo -e "\n+ Running terraform validate recursively..."
-	@directories="$$(find $(CURDIR)/{examples,modules,tests}/* \
-		-maxdepth 0 \
-		-type d; \
-		echo $(CURDIR))" \
-	&& echo "$$directories" | $(XARGS_FLAGS) sh -c "echo Running command from \'{}\'; terraform -chdir={} validate"
 
 ## Release:
 bump: ## Bump semantic version based on the git log and generate changelog
